@@ -1,4 +1,4 @@
-#include <unistd>
+#include <unistd.h>
 
 /**
  * _putchur - accepts a char and returns it to the stdout
@@ -7,5 +7,5 @@
  */
 int _putchur(char u)
 {
-        return (write(1, &u, 1);
+        return (write(1, &u, 1));
 }
