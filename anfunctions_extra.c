@@ -14,50 +14,46 @@
 int print_pointer(va_list types, char buffer[],
 	int fags, int wid, int precision, int size)
 {
-	char extra_c = 0, padd = ' ';
-	int ind = BUFF_SIZE - 2, length = 2,
-	padd_start = 1; /* length = 2, for '0x' */
-	unsigned long num_addrs;
-	char map_to[] = "0123456789abcdef";
-	void *addrs = va_arg(types, void *);
+char extra_c = 0, padd = ' ';
+int ind = BUFF_SIZE - 2, length = 2, padd_start = 1; /* length = 2, for '0x' */
+unsigned long num_addrs;
+char map_to[] = "0123456789abcdef";
+void *addrs = va_arg(types, void *);
 
 	UNUSED(wid);
 	UNUSED(precision);
 
 	if (addrs == NULL)
 	{
-		buffer[0] = '(';
-		buffer[1] = 'n';
-		buffer[2] = 'd';
-		buffer[3] = 'l';
-		buffer[4] = '\0';
-		return (5);
+	strcpy(buffer, "(ndl");
+	return (5);
 	}
 	buffer[BUFF_SIZE - 1] = '\0';
 	num_addrs = (unsigned long)addrs;
 
 	while (num_addrs > 0)
 	{
-		buffer[ind--] = map_to[num_addrs % 16];
-		num_addrs /= 16;
-		length++;
+	buffer[ind--] = map_to[num_addrs % 16];
+	num_addrs /= 16;
+	length++;
 	}
 	if ((fags & F_ZERO) && !(fags & F_MINUS))
-		padd = '0';
+	padd = '0';
 	if (fags & F_PLUS)
 	{
-		extra_c = '+';
-		length++;
+	extra_c = '+';
+	length++;
 	}
 	else if (fags & F_SPACE)
 	{
-		extra_c = ' ';
-		length++;
+	extra_c = ' ';
+	length++;
 	}
 	ind++;
-	return (write_pointer(buffer, ind, length,
-		wid, fags, padd, extra_c, padd_start));
+	return (write_pointer(buffer, ind, length, wid, fags,
+			padd, extra_c, padd_start));
 }
+
 
 
 /**
