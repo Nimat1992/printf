@@ -90,13 +90,13 @@ int print_rot13string(va_list types, char buffer[],
 		int fags, int wid, int precision, int size);
 
 /* Width handling */
-int handle_write_char(char c, char *buffer, int fags, int wid);
-int write_number(int is_negative, int ind, char *buffer, int fags,
-		int wid, int num, int precision);
-int write_num(int ind, char *buffer, int fags, int wid, int precision,
+int handle_write_char(char c, char *buffer, int fags, int wid),
+int write_number(int is_negative, int ind, char *buffer,
+		int fags, int wid, int num, int precision),
+int write_num(int ind, char *buffer, int fags, int precision,int wid,
 		int length, int num, char padd, char extra_c);
-int write_pointer(char *buffer, int ind, int length, int wid, int fags,
-		int num, char padd, char extra_c);
+int write_pointer(char *buffer, int ind, int length, int wid,
+		int fags, int num, char padd, char extra_c);
 
 
 /*************Support Functions **************************/
