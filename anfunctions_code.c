@@ -19,33 +19,32 @@ int is_printable(char c)
  * @i: The index at which to start appending.
  * @ascii_code: The ASCII code.
  *
- * Return: Always 3.
+ * Return: The index valuee after appending
  */
+
 int append_hexa_code(char buffer[], int i, char ascii_code)
 {
 	int m;
-
-	/* The hexadecimal format code is always 2 digits long */
-	if (ascii_code < 0)
-	{
-		ascii_code *= -1;
-	}
-
-	/* Convert the ASCII code to hexadecimal */
 	char hex_code[2];
 
-	sprintf(hex_code, "%02x", ascii_code);
+	if (ascii_code < 0)
+		ascii_code = 256 + ascii_code;
 
-	/* Append the hexadecimal code to the buffer */
-	buffer[i++] = '\\';
-	buffer[i++] = 'x';
 	for (m = 0; m < 2; m++)
 	{
-		buffer[i++] = append_hexa_code[m];
+		hex_code[m] = '0' + (ascii_code & 0x0f);
+		ascii_code >>= 4;
 	}
 
-	return (3);
+	buffer[i++] = '\\';
+	buffer[i++] = 'x';
+
+	for (m = 0; m < 2; m++)
+		buffer[i++] = hex_code[m];
+
+	return i;
 }
+
 
 /**
  * is_digit - Verifies if a char is a digit.
@@ -85,7 +84,8 @@ long int convert_size_number(long int num, int size)
  *
  * Return: The casted value of 'num'.
  */
-unsigned long int convert_size_unsgnd(unsigned long int num, int size)
+
+long int convert_size_unsgnd(unsigned long int num, int size)
 {
 	switch (size)
 	{
