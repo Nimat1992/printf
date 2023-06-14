@@ -9,7 +9,8 @@
  *
  * Return: The number of characters printed.
  */
-int handle_write_char(char c, char *buffer, int fags, int wid)
+int handle_write_char(char c, char *buffer,
+		int fags, int wid, int precision, int size)
 {
 	int d = 0;
 	char padd = ' ';
@@ -154,23 +155,24 @@ int write_num(int ind, char *buffer, int fags, int precision, int wid,
  */
 int write_unsigned(int ind, char *buffer, int fags, int wid, int precision)
 {
-	int length = BUFF_SIZE - ind - 1;
-	char padd = ' ';
+    int length = BUFF_SIZE - ind - 1;
+    char padd = ' ';
+    int d, n; // Declare variables here
 
-	UNUSED(precision);
+    UNUSED(precision);
 
-	if ((fags & F_ZERO) && !(fags & F_MINUS))
-		padd = '0';
+    if ((fags & F_ZERO) && !(fags & F_MINUS))
+        padd = '0';
 
-	if (wid > length)
-	{
-		for (int d = 0; d < wid - length; d++)
-			buffer[ind + d] = padd;
-	}
+    if (wid > length)
+    {
+        for (d = 0; d < wid - length; d++)
+            buffer[ind + d] = padd;
+    }
 
-	int n = write(1, buffer + ind, length);
+    n = write(1, buffer + ind, length);
 
-	return (n);
+    return n;
 }
 
 /**
@@ -186,7 +188,7 @@ int write_unsigned(int ind, char *buffer, int fags, int wid, int precision)
  * Return: The number of characters written to the buffer.
  */
 int write_pointer(char *buffer, int ind, int length, int wid,
-		int fags, int num, char padd, char extra_c)
+		int /*fags*/, int num, char padd, /*extra_c*/)
 {
 	int d;
 
